@@ -35,9 +35,9 @@ Then you can initialize your Cloudant database.
 python cloudant_db_create.py
 ```
 
-This will create three ``tables'' in your Cloudant instance, and at the same time add some query indexes so that the app can make queries to them.
+This will create three "tables" in your Cloudant instance, and at the same time add some query indexes so that the app can make queries to them.
 
-These three ``tables'' are: *user_db*, *model_info_db*, *model_history_db*.
+These three "tables" are: *user_db*, *model_info_db*, *model_history_db*.
 
 The above command can also be used when you want to change your databases to another Cloudant instance.
 
