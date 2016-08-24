@@ -1,0 +1,116 @@
+
+         <!-- <h2 class="sub-header">Score - {{model_name}}</h2><br>
+         <h5> Here you could score with table in your DashDB service or just give some inputs for real-time scoring.</h5> 
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#real-time-score" role="tab" data-toggle="tab">Real-time Score</a></li>
+            <li role="presentation"><a href="#batch-score" role="tab" data-toggle="tab">Batch Score</a></li>
+          </ul>
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active table-wrapper" id="real-time-score">
+      <div class="score-operations">
+      <button class="button" id="add-entry">Add new entry</button>
+      <button class="button">Delete entry</button>
+            <button class="button" id="score-hints">Hints</button></div>
+      <hr>
+      <div class=score-table-area>
+      <table id="real-time-score-input" class="score-table">
+        <thead>
+          <tr>
+              {%for item in metadata%}
+              <th><span class="input-name">{{item['name']}}</span></th>
+              {%endfor%}
+          </tr></thead>
+        <tbody>
+          <tr class="input-row current-row">
+              {%for item in metadata%}
+              <td><input type="text" class="{{item['name']}}" placeholder="{{item['storageType']}}"></td>
+              {%endfor%}
+          </tr>  </tbody>   
+      </table></div>
+    </div>
+    <div role="tabpanel" class="tab-pane" id="batch-score">
+    </div>
+  </div>
+
+  <div class="score-footer">
+  </div> 
+
+  <div class="score-ops">
+  <table id="score-ops-bar"><tr>
+  <td id="score-last" hidden><span class="glyphicon glyphicon-menu-left"></span></td>
+  <td id="ops-td">
+  <span id="choose-type" hidden>
+        <td id="choose-batch">Batch Score</td>
+        <td id="choose-real-time">Real-time Score</td>
+  </span>
+  <div id="batch_step_1">
+      <button class="button" id="add-entry">Add new entry</button>
+      <button class="button">Delete entry</button>
+      <button class="button" id="score-hints">Hints</button></div>
+    <span id="batch_step_2" hidden>
+      <button class="button" id="add-entry">Add new entry</button>
+      <button class="button">Delete entry</button>
+
+  </span>
+  </td>
+  <td id="score-next" hidden><span class="glyphicon glyphicon-menu-right"></span></td></tr></table>
+  </div> -->
+
+
+<div class="score-ops">
+  <table class="score-ops-table">
+  <tr>
+  <td id="score-last" class="score-last-next" hidden><span class="glyphicon glyphicon-menu-left"></span></td>
+  <td id="choose-batch" class="choose-type" style="width:50%">Batch Score</td>
+  <td id="choose-real-time" class="choose-type">Real-time Score</td>
+
+  <td id="add-entry" class="real_time_step_1">Add new entry</td>
+  <td id="delete-entry" class="real_time_step_1">Delete entry</td>
+  <td id="score-get-hint" class="real_time_step_1">Get Hints</td>
+
+  <td class="batch_step_1" style="width:40%"><select class="batch-score-select" id="choose-batch-score-schema"><option>Choose Schema</option><option>Samples</option><option>My Tables</option></select></td>
+  <td class="batch_step_1"><select class="batch-score-select" id="choose-batch-score-table"><option>Choose Table</option></select></td>
+
+  <td class="batch_step_2"><select class="batch-score-select" id="choose-batch-score-primary-key"><option>Choose Primary Key</option></select></td>
+  <td  class="real_time_step_2 batch_step_2" style="width: 50%"><input id="custom_table_name" type="text" placeholder="Type custom table name for result table. (optional)"></td>
+  <td id="real_time_score" class="real_time_step_2">Score Now</td>
+   <td id="batch_score" class="batch_step_2">Score Now</td>
+
+    <td id="score-next" class="score-last-next" hidden><span class="glyphicon glyphicon-menu-right"></span></td>
+</tr>
+</table>
+  </div>
+
+<div class="score-table-area" id="real-time-score-input-wrapper" hidden>
+      <table id="real-time-score-input" class="score-table" hidden>
+        <thead>
+          <tr>
+              {%for item in metadata%}
+              <th><span class="input-name">{{item['name']}}</span></th>
+              {%endfor%}
+          </tr></thead>
+        <tbody>
+          <tr class="input-row current-row">
+              {%for item in metadata%}
+              <td><input type="text" class="{{item['name']}}" placeholder="{{item['storageType']}}"></td>
+              {%endfor%}
+          </tr>  </tbody>   
+      </table>
+</div>
+
+
+
+<div id="batch-score-input-wrapper"></div>
+
+<div id="score-output-wrapper"></div>
+
+<div id="choose-type-alert"><br>
+  <h3 class="glyphicon glyphicon-menu-up"></h3>
+  <h3>Choose type of scoring from above.</h3></div>
+
+<div id="choose-table-alert" hidden><br>
+  <h3 class="glyphicon glyphicon-menu-up"></h3>
+  <h3>Choose a table in your DashDB service as input.</h3></div>
+
+

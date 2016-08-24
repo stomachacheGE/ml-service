@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <div id="access-key" data-key="{{user.access_key}}"></div>
+      {% endif %}
+          <div class="sidebar" id="sidebar-model">
+          <ul class="nav model-nav">
+            <table id="model-sidebar-table"><tr>
+            	<td class="h4" style="text-align: center"><a href="../catalog"><span class="glyphicon glyphicon-chevron-left" style=""></span></a></td>
+            	<td class="h4" style="font-weight: bold; padding:0px"><select id="current-page-model" style="width: 100%; height: 100%; background-color:#f2f2f2; border: 0px"><option>{{model.model_name}}</option>
+                {% for item in models %}
+                <option>{{item}}</option>
+                {% endfor %}
+              </select></td><tr></table>
+            <li class="active" id="overview-li" data-location="overview">Overview</a></li>
+            <li id="metadata-li" data-location="metadata">Metadata</li>
+            <li id="score-li" data-location="score">Score</a></li>
+            <li id="history-li" data-location="history">History</a></li>
+            <li id="refresh-li" data-location="refresh">Refresh</a></li>
+            <li id="visualization-li" data-location="visualization">Visualize</a></li>
+            <li id="api-li" data-location="api">API</a></li>
+          </ul>
+        </div>
+
+                <div class="main" style="position: fixed; left: 250px; width:auto; right: 0px; bottom:0px; top:45px; overflow-y:scroll"></div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../static/javascript/jquery.dynatable.js"></script>
+    <script src="../static/javascript/jquery.form.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../static/javascript/model.js"></script>
+      <script type="text/javascript">
+          $(document).ready(function () {
+              $('#{{page}}-li').click()
+          })
+      </script>
+{% endblock%}

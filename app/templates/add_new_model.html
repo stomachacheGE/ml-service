@@ -1,0 +1,75 @@
+ {% extends "base.html" %}
+
+{% block content %}
+      {% if user.is_authenticated %}
+      <div id="access-key" data-key="{{user.access_key}}"></div>
+      {% endif %}
+ <div class="main" style="position: fixed; left: 70px; width:auto; right: 0px; bottom:0px; top:45px; overflow-y:scroll">
+ 	<div class="add-new-model-ops">
+  <table class="add-new-model-ops-table">
+  <tr>
+
+  <td id="add-last" class="add-last-next" hidden><span class="glyphicon glyphicon-menu-left"></span></td>
+  <td  class="add-new-dashdb-step-1 add-new-spss-step-1" style="width:50%;"><input id="new-model-name" type="text" placeholder="Please type the name of the new model" style="padding-left:20px;" autofocus></td>
+  <td class="add-new-dashdb-step-1 add-new-spss-step-1" ><select class="add-new-model-select" id="choose-model-type">
+    <option value="dashdb" disabled selected>Please choose type of the new model</option>
+  	<option value="dashdb">DashDB In-databse Model</option><option value="spss">SPSS Modeler Stream</option><option disabled>SPSS Auto-Modeling</option><option disabled>Custom R in-db model</option><option disabled>Notebook Model with Spark</option><option disabled>Spark ML Pipeline</option><option disabled>Text Extractor</option>
+  	</select></td>
+
+  <td class="add-new-dashdb-step-2" style="width:30%">
+  	<select class="add-new-model-select" id="choose-dashdb-model-type">
+    <option disabled selected>Choose algorithm</option>
+  	<option>Decision Tree</option>
+  	</select></td>
+  <td class="add-new-dashdb-step-2" style="width:30%"><select class="add-new-model-select" id="dashdb-model-input-schema"><option disabled selected>Choose Schema</option><option>Samples</option><option>My Tables</option></select></td>
+  <td class="add-new-dashdb-step-2"><select class="add-new-model-select" id="dashdb-model-input-table"><option disabled selected>Choose Table</option></select></td>
+
+  <td class="add-new-dashdb-step-3"><select class="add-new-model-select" id="dashdb-model-input-target-column"><option disabled selected>Choose Target Coulumn</option></select></td>
+  <td class="add-new-dashdb-step-3"><select class="add-new-model-select" id="dashdb-model-input-primary-key"><option disabled selected>Choose Primary Key</option></select></td>
+  <td id="add-new-dashdb-create-now" class="add-new-dashdb-step-3">Create Now</td>
+
+
+    
+
+    <form id="upload-form" method="post" enctype="multipart/form-data">
+	<td class="add-new-spss-step-2" style="width:60%" id="choose-str-file-td">
+          <label class="upload-btn">
+            <input type="file" name="choose">
+              <span>Choose Model</span></label> </td>
+
+    <td class="add-new-spss-step-2" id="add-new-spss-create-now">
+          <label class="submit-btn">
+            <input type="submit" name="refresh">
+              <span>Create Now</span></label> </td>
+</form>
+
+<td id="add-next" class="add-last-next"><span class="glyphicon glyphicon-menu-right"></span></td>
+
+</tr>
+</table>
+  </div>
+
+    <div id="dashdb-model-input-wrapper"></div>
+
+
+    <div id="spss-choose-file-info"hidden>
+       <h3>File <span class="filename" style="color: #ff6633; font-weight:bold"></span> has been selected.</h3>
+    </div>
+
+  <div id="choose-model-type-alert"><br>
+    <h3 class="glyphicon glyphicon-menu-up"></h3>
+    <h3>Give name for the new model and choose model type from above.</h3></div>
+
+    <div id="spss-choose-file-alert" hidden><br>
+    <h3 class="glyphicon glyphicon-menu-up"></h3>
+    <h3>Click above button to choose a .str file to refresh.</h3></div>
+
+     <div id="choose-dashdb-input-alert" hidden><br>
+    <h3 class="glyphicon glyphicon-menu-up"></h3>
+    <h3>Choose algorithm and an input table in your Dashdb Service from above</h3></div>
+
+ </div>
+
+
+    <script src="../static/javascript/new_model.js"></script>
+{% endblock%}

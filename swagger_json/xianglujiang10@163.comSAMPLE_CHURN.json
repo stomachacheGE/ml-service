@@ -1,0 +1,689 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.0.1",
+        "title": "Machine Learning Service APIs"
+    },
+    "tags": [
+        {
+            "name": "model",
+            "description": "operations on model itself"
+        },
+        {
+            "name": "hint",
+            "description": "hint for scoring input"
+        },
+        {
+            "name": "description",
+            "description": "description on this model"
+        },
+        {
+            "name": "score",
+            "description": "score with this model"
+        },
+        {
+            "name": "history",
+            "description": "history operations on this model"
+        },
+        {
+            "name": "metadata",
+            "description": "metadata of scoring Input/Output"
+        },
+        {
+            "name": "visualize",
+            "description": "visualization/explanation of this model"
+        }
+    ],
+    "paths": {
+        "/api/SAMPLE_CHURN": {
+            "get": {
+                "tags": [
+                    "model"
+                ],
+                "summary": "retrieve the basic model information",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful response.",
+                        "schema": {
+                            "$ref": "#/definitions/ModelbyName"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "model"
+                ],
+                "summary": "deploy/refresh model by changing input table",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "CreationInput",
+                        "in": "body",
+                        "description": "creation information of the model",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/DashdbCreationInfo"
+                        }
+                    },
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully deployed/refreshed",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "url": {
+                                    "type": "string",
+                                    "description": "url to the model"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "description": "indicate this is refreshing or deploying"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "error": {
+                                    "type": "string",
+                                    "description": "indicate why this request is not successful. For example, the file format does not match"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "model"
+                ],
+                "summary": "delete this model and its relevant data",
+                "description": "This operation will delete the model in Bluemix service and its relevant data in our application database",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully deleted",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "further message on this operation"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SAMPLE_CHURN/real_time_score": {
+            "post": {
+                "tags": [
+                    "score"
+                ],
+                "summary": "make a new real-time score",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    },
+                    {
+                        "name": "input",
+                        "in": "body",
+                        "description": "the input data used to make a score",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "header": {
+                                    "type": "array",
+                                    "description": "name of each input entry",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "description": "an array of input data",
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "made a successful real-time scoring",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "description": "array of output data",
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "header": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    },
+                                    "description": "name of each output entry"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SAMPLE_CHURN/batch_score": {
+            "post": {
+                "tags": [
+                    "score"
+                ],
+                "summary": "make a batch score",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    },
+                    {
+                        "name": "input",
+                        "in": "body",
+                        "description": "the input table information used to make a batch score",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "input_table": {
+                                    "type": "string"
+                                },
+                                "primary_key": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully made a batch score",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "input": {
+                                    "type": "string",
+                                    "description": "input table name"
+                                },
+                                "output": {
+                                    "type": "string",
+                                    "description": "the table name of scoring result stored in DashDB"
+                                },
+                                "result_table_url": {
+                                    "type": "string",
+                                    "description": "url to the result table"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SAMPLE_CHURN/metadata": {
+            "get": {
+                "tags": [
+                    "metadata"
+                ],
+                "summary": "retrieve the input metadata of the model",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successfully get the metadata",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "InputMetadata": {
+                                    "type": "array",
+                                    "description": "array of input metadata entry",
+                                    "items": {
+                                        "$ref": "#/definitions/MetadataEntry"
+                                    }
+                                },
+                                "OutputMetadata": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/MetadataEntry"
+                                    },
+                                    "description": "array of output metadata entry"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SAMPLE_CHURN/history": {
+            "get": {
+                "tags": [
+                    "history"
+                ],
+                "summary": "retrieve past scoring and refreshing history",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "type of history",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "score",
+                            "refresh",
+                            "visualize"
+                        ]
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "order to sort retrieved records",
+                        "required": false,
+                        "type": "string",
+                        "enum": [
+                            "desc",
+                            "asc"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful reponse",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/HistoryEntry"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SAMPLE_CHURN/description": {
+            "post": {
+                "tags": [
+                    "description"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "change the description of this model",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    },
+                    {
+                        "name": "Description",
+                        "in": "body",
+                        "description": "new description to update",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "description changed successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "description"
+                ],
+                "summary": "get the description of this model",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the content of model's description",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "description": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SAMPLE_CHURN/hint": {
+            "post": {
+                "tags": [
+                    "hint"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "summary": "change the hint for scoring",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    },
+                    {
+                        "name": "Hint",
+                        "in": "body",
+                        "description": "new hint to update",
+                        "required": true,
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "hint": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "hint changed successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "hint": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "hint"
+                ],
+                "summary": "get the hint of this model",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "the content of this model's hint",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "hint": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/SAMPLE_CHURN/visualize": {
+            "get": {
+                "tags": [
+                    "visualize"
+                ],
+                "summary": "visualize/explain this model",
+                "parameters": [
+                    {
+                        "name": "access_key",
+                        "in": "query",
+                        "description": "user's access key to this API",
+                        "required": true,
+                        "type": "string",
+                        "default": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6InhpYW5nbHVqaWFuZzEwQDE2My5jb20ifQ.ccxrph-pETopVlcd4z7ok5kKUD2-iXbyCR2lhA8AYtc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "hint changed successfully",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string"
+                                },
+                                "pic_url": {
+                                    "description": "the URL to download the visualization image",
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "ModelbyName": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "description": "some description of the model"
+                },
+                "metadata": {
+                    "type": "string",
+                    "description": "url to the metadata of the model"
+                },
+                "real_time_score": {
+                    "type": "string",
+                    "description": "url to real-time score"
+                },
+                "batch_score": {
+                    "type": "string",
+                    "description": "url to batch score"
+                },
+                "visualize": {
+                    "type": "string",
+                    "description": "url to visualize"
+                },
+                "history": {
+                    "type": "string",
+                    "description": "url to history"
+                },
+                "source": {
+                    "type": "string",
+                    "description": "filename of the model source"
+                },
+                "creation_time": {
+                    "type": "string",
+                    "description": "when this model is stored in database(although it should when this model is generated in Bluemix service)"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "which Bluemix service provide this model",
+                    "enum": [
+                        "SPSS Predictive Modeling",
+                        "DashDB In-database Model"
+                    ]
+                },
+                "last_refreshed": {
+                    "type": "string",
+                    "description": "the time when this model was refreshed last time"
+                }
+            }
+        },
+        "HistoryEntry": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string",
+                    "description": "when this specific entry is generated"
+                },
+                "bahaviour": {
+                    "type": "string",
+                    "description": "could be refreshing or scoring",
+                    "enum": [
+                        "score",
+                        "refresh"
+                    ]
+                },
+                "value": {
+                    "description": "This could be I/O data of scoring or indication of that model has been refreshed"
+                }
+            }
+        },
+        "MetadataEntry": {
+            "type": "object",
+            "properties": {
+                "measurementLevel": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "name of this entry"
+                },
+                "storageType": {
+                    "type": "string"
+                }
+            }
+        },
+        "DashdbCreationInfo": {
+            "type": "object",
+            "properties": {
+                "schema": {
+                    "description": "which schema this input table belongs to",
+                    "enum": [
+                        "SAMPLES",
+                        "MYTABLE"
+                    ]
+                },
+                "input_table": {
+                    "type": "string"
+                },
+                "target_column": {
+                    "type": "string"
+                },
+                "primary_key": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "consumes": [
+        "multipart/form-data"
+    ]
+}

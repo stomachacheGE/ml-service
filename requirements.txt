@@ -1,0 +1,10 @@
+Flask 
+flask_restful
+requests
+cloudant
+werkzeug
+flask-cors
+Flask-Login == 0.3.2
+Flask-WTF == 0.12
+WTForms == 2.0.2
+itsdangerous == 0.24

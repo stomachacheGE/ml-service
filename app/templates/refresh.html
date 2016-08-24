@@ -1,0 +1,69 @@
+
+ 	<div class="add-new-model-ops" style="left:250px">
+  <table class="add-new-model-ops-table">
+  <tr>
+  {% if type == 'DashDB In-database Model'%}
+
+  <td id="add-last" class="add-last-next" hidden><span class="glyphicon glyphicon-menu-left"></span></td>
+
+
+  <td class="add-new-dashdb-step-2" style="width:30%">
+  	<select class="add-new-model-select" id="choose-dashdb-model-type">
+    <option disabled selected>Choose algorithm</option>
+  	<option>Decision Tree</option>
+  	</select></td>
+  <td class="add-new-dashdb-step-2" style="width:30%"><select class="add-new-model-select" id="dashdb-model-input-schema"><option disabled selected>Choose Schema</option><option>Samples</option><option>My Tables</option></select></td>
+  <td class="add-new-dashdb-step-2"><select class="add-new-model-select" id="dashdb-model-input-table"><option disabled selected>Choose Table</option></select></td>
+
+  <td class="add-new-dashdb-step-3"><select class="add-new-model-select" id="dashdb-model-input-target-column"><option disabled selected>Choose Target Coulumn</option></select></td>
+  <td class="add-new-dashdb-step-3"><select class="add-new-model-select" id="dashdb-model-input-primary-key"><option disabled selected>Choose Primary Key</option></select></td>
+  <td id="add-new-dashdb-create-now" class="add-new-dashdb-step-3">Refresh Now</td>
+  <td id="add-next" class="add-last-next"><span class="glyphicon glyphicon-menu-right"></span></td>
+    
+</tr>
+</table>
+
+     <div id="choose-dashdb-input-alert"><br>
+    <h3 class="glyphicon glyphicon-menu-up"></h3>
+    <h3>Choose algorithm and a table in your Dashdb Service from above</h3></div>
+
+      <div id="dashdb-model-input-wrapper"></div>
+    
+  {% elif type == 'SPSS Predictive Model' %}
+  <td class="add-new-spss-step-2" style="width:60%" id="choose-str-file-td">
+    <form id="upload-form" method="post" enctype="multipart/form-data">
+          <label class="upload-btn">
+            <input type="file" name="choose">
+              <span>Choose Model</span></label> </td>
+    </form>
+
+    <td class="add-new-spss-step-2" id="add-new-spss-create-now">
+          <label class="submit-btn">
+            <input type="submit" name="refresh">
+              <span>Refresh Now</span></label> </td>
+
+
+</tr>
+</table>
+
+    <div id="spss-choose-file-alert"><br>
+    <h3 class="glyphicon glyphicon-menu-up"></h3>
+    <h3>Click above button to choose a .str file to refresh.</h3></div>
+
+
+    <div id="spss-choose-file-info"hidden>
+       <h3>File <span class="filename" style="color: #0B6CA9; font-weight:bold"></span> has been selected.</h3>
+    </div>
+
+ {% endif %}
+
+
+  </div>
+
+
+
+
+
+
+
+ </div>

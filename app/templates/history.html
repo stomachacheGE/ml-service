@@ -1,0 +1,27 @@
+<div class="history-ops">
+  <table class="history-ops-table">
+  <tr>
+  <td style="width: 40%"><select class="hist-select" id="hist-type-select"><option value="all">All</option><option value="score">Score</option><option value="refresh">Refresh</option><option value="visualize">Visualization</option></select></td>
+
+  <td style="width: 40%"><select class="hist-select" id="hist-sort-select"><option value="desc">Time descedant</option><option value="asc">Time ascendant</option></select></td>
+  <td id="retrieve" style="width: 20%">Retrieve Now</td>
+</tr>
+</table>
+  </div>
+
+<div id="history-table-wrapper" hidden>
+      <table id="history-table" hidden>
+        <thead>
+          <tr>
+              <th>Behaviour</th>
+              <th>Time</th>
+              <th>Operations</th>
+          </tr></thead>
+        <tbody></tbody>   
+      </table>
+</div>
+
+<div id="choose-type-alert"><br>
+  <h3 class="glyphicon glyphicon-menu-up"></h3><br>
+  <h3>Choose type of history from above.</h3></div>
+

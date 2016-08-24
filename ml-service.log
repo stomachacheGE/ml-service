@@ -1,0 +1,147 @@
+2015-12-16 20:30:09,119 - app - ERROR - Deploying/refreshing model MyModel failed: UnboundLocalError: local variable 'input_table' referenced before assignment
+2015-12-16 20:35:08,437 - app - ERROR - Deploying/refreshing model ModelSample failed: ModelCreationError: Create model in Dashdb failed: Create model failed with reson: Running R script failed. Console Output: Loading required package: RODBC
+Loading required package: ibmdbR
+Loading required package: methods
+Loading required package: MASS
+Loading required package: grDevices
+Loading required package: graphics
+Loading required package: stats
+Loading required package: utils
+Loading required package: Matrix
+Loading required package: arules
+
+Attaching package: \u2018arules\u2019
+
+The following objects are masked from \u2018package:base\u2019:
+
+    %in%, write
+
+Loading required package: rpart
+Loading required package: rpart.plot
+Loading required package: ggplot2
+Error in ida.data.frame("SAMPLESCUSTOMER_ACQUISITION") : 
+  Table SAMPLESCUSTOMER_ACQUISITION does not exist
+Calls: idaTree ... idaParseRFormula -> is.ida.data.frame -> inherits -> ida.data.frame
+Execution halted
+Warning message:
+closing unused RODBC handle 1 
+
+2015-12-16 20:47:28,467 - app - ERROR - Deploying/refreshing model dd failed: ModelCreationError: Create model in Dashdb failed: Create model failed with reson: Running R script failed. Console Output: Loading required package: RODBC
+Loading required package: ibmdbR
+Loading required package: methods
+Loading required package: MASS
+Loading required package: grDevices
+Loading required package: graphics
+Loading required package: stats
+Loading required package: utils
+Loading required package: Matrix
+Loading required package: arules
+
+Attaching package: \u2018arules\u2019
+
+The following objects are masked from \u2018package:base\u2019:
+
+    %in%, write
+
+Loading required package: rpart
+Loading required package: rpart.plot
+Loading required package: ggplot2
+Error: Some variables are not available in ida.data.frame: None
+Execution halted
+Warning message:
+closing unused RODBC handle 1 
+
+2015-12-16 20:52:26,457 - app - ERROR - Real time scoring failed: ModelScoreError: Score failed with reason:Failed to score DRUG, msg=ERROR: Field [Age] is not assignment compatible with [LONG], details:java.lang.RuntimeException: ERROR: Field [Age] is not assignment compatible with [LONG]
+	at com.ibm.spss.internal.PredictiveScorerCSPImpl$InputIterator.fetch(PredictiveScorerCSPImpl.java:340)
+	at com.spss.csp.internal.CSPImageImpl.execute(Native Method)
+	at com.spss.csp.internal.CSPImageImpl.execute(Unknown Source)
+	at com.ibm.spss.internal.PredictiveScorerCSPImpl.score(PredictiveScorerCSPImpl.java:133)
+	at com.ibm.spss.internal.SynchronizedPredictiveScorerCSPImpl.score(SynchronizedPredictiveScorerCSPImpl.java:68)
+	at com.ibm.spss.internal.scorer.pool.PooledScorerImpl.score(PooledScorerImpl.java:97)
+	at com.ibm.spss.blackbox.score.resource.ScoreUtil.score(ScoreUtil.java:153)
+	at com.ibm.spss.blackbox.score.resource.ScoreResource.scoreWithInputdata(ScoreResource.java:69)
+	at sun.reflect.GeneratedMethodAccessor22.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:56)
+	at java.lang.reflect.Method.invoke(Method.java:620)
+	at org.apache.wink.server.internal.handlers.InvokeMethodHandler.handleRequest(InvokeMethodHandler.java:63)
+	at org.apache.wink.server.handlers.AbstractHandler.handleRequest(AbstractHandler.java:33)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.internal.handlers.CreateInvocationParametersHandler.handleRequest(CreateInvocationParametersHandler.java:54)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.internal.handlers.FindResourceMethodHandler.handleSubResourceMethod(FindResourceMethodHandler.java:188)
+	at org.apache.wink.server.internal.handlers.FindResourceMethodHandler.handleRequest(FindResourceMethodHandler.java:110)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.internal.handlers.FindRootResourceHandler.handleRequest(FindRootResourceHandler.java:95)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.internal.handlers.HeadMethodHandler.handleRequest(HeadMethodHandler.java:53)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.internal.handlers.OptionsMethodHandler.handleRequest(OptionsMethodHandler.java:46)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.internal.handlers.SearchResultHandler.handleRequest(SearchResultHandler.java:33)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.internal.log.ResourceInvocation.handleRequest(ResourceInvocation.java:92)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.internal.log.Requests.handleRequest(Requests.java:76)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:26)
+	at org.apache.wink.server.handlers.RequestHandlersChain.handle(RequestHandlersChain.java:22)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.doChain(AbstractHandlersChain.java:75)
+	at org.apache.wink.server.handlers.AbstractHandlersChain.run(AbstractHandlersChain.java:60)
+	at org.apache.wink.server.internal.RequestProcessor.handleRequestWithoutFaultBarrier(RequestProcessor.java:207)
+	at org.apache.wink.server.internal.RequestProcessor.handleRequest(RequestProcessor.java:154)
+	at org.apache.wink.server.internal.servlet.RestServlet.service(RestServlet.java:124)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:668)
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.service(ServletWrapper.java:1285)
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.handleRequest(ServletWrapper.java:776)
+	at com.ibm.ws.webcontainer.servlet.ServletWrapper.handleRequest(ServletWrapper.java:473)
+	at com.ibm.ws.webcontainer.filter.WebAppFilterManager.invokeFilters(WebAppFilterManager.java:1143)
+	at com.ibm.ws.webcontainer.webapp.WebApp.handleRequest(WebApp.java:4865)
+	at com.ibm.ws.webcontainer.osgi.DynamicVirtualHost$2.handleRequest(DynamicVirtualHost.java:297)
+	at com.ibm.ws.webcontainer.WebContainer.handleRequest(WebContainer.java:996)
+	at com.ibm.ws.webcontainer.osgi.DynamicVirtualHost$2.run(DynamicVirtualHost.java:262)
+	at com.ibm.ws.http.dispatcher.internal.channel.HttpDispatcherLink$TaskWrapper.run(HttpDispatcherLink.java:955)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1157)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:627)
+	at java.lang.Thread.run(Thread.java:798)
+
+2015-12-16 21:05:14,753 - app - ERROR - Deploying/refreshing model ss failed: ModelCreationError: Create model in Dashdb failed: Create model failed with reson: Running R script failed. Console Output: Loading required package: RODBC
+Loading required package: ibmdbR
+Loading required package: methods
+Loading required package: MASS
+Loading required package: grDevices
+Loading required package: graphics
+Loading required package: stats
+Loading required package: utils
+Loading required package: Matrix
+Loading required package: arules
+
+Attaching package: \u2018arules\u2019
+
+The following objects are masked from \u2018package:base\u2019:
+
+    %in%, write
+
+Loading required package: rpart
+Loading required package: rpart.plot
+Loading required package: ggplot2
+Error: Some variables are not available in ida.data.frame: None
+Execution halted
+Warning message:
+closing unused RODBC handle 1 
+
+2015-12-16 21:05:49,170 - app - ERROR - Setting up failed: ErrorCreate app/services failed: Create app ML*SERVICE failed. Reason: {u'code': 100002, u'error_code': u'CF-AppNameTaken', u'description': u'The app name is taken: ML*SERVICE'}

@@ -1,0 +1,92 @@
+<!-- extend base layout -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../static/img/favicon.ico"/>
+
+    <title>IBM Machine Learning Service</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!--scroll bar dependencies -->
+  <link rel="stylesheet" href="../static/css/jquery.mCustomScrollbar.css" />
+    
+      
+    <!-- Custom styles for this template -->
+    <link href="../static/css/index.css" rel="stylesheet">
+    <link href="../static/css/jquery.dynatable.css" rel="stylesheet"> 
+
+
+  </head>
+    <body>
+      <nav class="navbar navbar-default navbar-fixed-top" id="top-navbar">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/"><span style="color: #62C2C6">IBM</span> Machine Learning Service</a>
+        </div>
+        {% if g.user.is_authenticated %}
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{url_for('index')}}">Catalog</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="{{url_for('logout')}}">Logout</a></li>
+          </ul>
+          <a class="btn btn-info navbar-btn navbar-right" role="button" href="/explore-apis" aria-labelledby="API Documentation">Explore APIs</a>
+        </div>
+        {% else %}
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{url_for('login')}}">Login</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+        </div>  
+        {%endif%}      
+      </div>
+    </nav>
+{% include 'flash.html' %}
+<div class="container" style="position: absolute; top: 45px; padding-top:200px">
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+
+<form action="" method="post" name="login">
+  {{ form.hidden_tag() }}
+  <div class="form-group">
+    <label for="username">Bluemix ID</label>
+        {{ form.username(class_="form-control", type="email") }}
+            {% for error in form.username.errors %}
+            <span class="help-inline">[{{ error }}]</span><br>
+            {% endfor %}</div>
+  <div class="form-group">
+    <label for="password">Password</label>
+     {{ form.password(class_="form-control") }}
+            {% for error in form.password.errors %}
+            <span class="help-inline">[{{ error }}]</span><br>
+            {% endfor %}
+  </div>
+
+  <div class="checkbox">
+    <label>
+        {{ form.remember_me }} Remember Me
+    </label>
+  </div>
+   <input class="btn btn-default" type="submit" style="width: 150px" value="Sign In">
+</form>
+</div>
+</div>
+</div>
+
+  </body>
+  </html>

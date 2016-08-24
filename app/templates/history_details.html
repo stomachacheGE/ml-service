@@ -1,0 +1,81 @@
+
+
+<!-- Modal Show Table-->
+<div class="modal fade" id="history-detail-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <span class="h3 modal-title">
+          {% if type ==  'score' %}
+          Table
+          {% elif type == 'refresh' and model_type == 'DashDB In-database Model' %}
+          Source Table
+          {% else %}
+          Details
+          {% endif %}
+          </span>
+       </div> <!---/modal header-->
+      
+      <div class="modal-body"> 
+      {% if type == 'score' %}
+
+        <table id="show-table" hidden="" class="score-table" style="display: table;">
+        <thead>
+          <tr>
+          {%for item in header %}
+            <th>{{item.name}}</th>
+          {%endfor%}
+          </tr>
+        </thead>
+        <tbody>
+          {% if score_type == 'real_time_score' %}
+            {% for record in records %}
+              <tr>
+                {% for item in record %}
+                  <td>{{item}}</td>
+                {% endfor%}
+              </tr>
+            {% endfor %}
+          {% elif score_type == 'batch_score'%}
+            {% for record in records %}
+              <tr>
+                {% for item in record.values() %}
+                  <td>{{item}}</td>
+                {% endfor%}
+              </tr>
+            {% endfor %}
+          {% endif %}
+        </tbody>   
+      </table>
+
+    {% elif type =='visualization' %}
+      <span id="visualization-pic"><img src="{{file}}" width="600" height="600" alt="visualization result"></span>
+    {% else %}
+        {% if model_type == 'DashDB In-database Model'%}
+        <table id="show-table" hidden="" class="score-table" style="display: table;">
+        <thead>
+          <tr>
+          {%for item in header %}
+            <th>{{item.name}}</th>
+          {%endfor%}
+          </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+              <tr>
+                {% for item in record.values() %}
+                  <td>{{item}}</td>
+                {% endfor%}
+              </tr>
+            {% endfor %}
+        </tbody>   
+      </table>
+      {% elif model_type == 'SPSS Predictive Model' %}
+      <h4 style="margin-top:30px">{{detail}}</h4>
+          {% endif %}
+    {% endif %}
+      </div><!---/modal body-->
+    </div>
+  </div>
+</div> <!-- /Modal Show Table-->

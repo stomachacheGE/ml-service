@@ -1,0 +1,21 @@
+<div class="score-table-area">
+<table class="score-table" id="score-output-table">
+  <thead>
+            <tr>
+              {%for item in result['header'] %}
+              <th>{{item}}</th>
+              {%endfor%}
+            </tr>
+  </thead>
+  </tbody>      
+            {%for output in result['data'] %}
+            <tr>
+                {%for value in output%}
+                <td>{{value}}</td>
+                {%endfor%}
+            </tr>
+            {%endfor%}
+  </tbody>
+
+</table>
+</div>

@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        {% if user.is_authenticated %}
+        <div id="access-key" data-key="{{user.access_key}}"></div>
+        {% endif %}
+
+<div class="modal fade in" id="delete-confirm-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <span class="h3 modal-title">
+          
+          Alert
+          
+          </span>
+       </div> <!---/modal header-->
+      
+      <div class="modal-body"> 
+      
+        <p>Are you sure to delete  <span id="delete-number"></span> models?</p>
+    
+      </div><!---/modal body-->
+      <div class="modal-footer">
+        <button type="button" id="confirm-delete" class="button" style="float:left">Delete</button>
+        <button type="button" id="cancel-delete" class="button" style="float:right">Cancel</button>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+        <div class="main" style="position: fixed; left: 0px; width:auto; right: 0px; bottom:0px; top:45px; overflow-y:scroll">
+          <h2 class="sub-header">Catalog</h2><br>
+          <h5>Here you could manage all the models deployed. Just click and see what you can do with the model.</h5><hr>
+          <div>
+            <a class="button" id="add-new-model-btn" href="#" onclick="return false;">
+              <svg class="icon" viewBox="0 0 16 16"><g><polygon points="8.6,4 7.4,4 7.4,7.4 4,7.4 4,8.6 7.4,8.6 7.4,12 8.6,12 8.6,8.6 12,8.6 12,7.4 8.6,7.4"></polygon><path d="M8,0C3.6,0,0,3.6,0,8s3.6,8,8,8s8-3.6,8-8S12.4,0,8,0z M8,14.9c-3.8,0-6.9-3.1-6.9-6.9S4.2,1.1,8,1.1s6.9,3.1,6.9,6.9 S11.8,14.9,8,14.9z"></path></g></svg>
+              Add New Model
+            </a>
+            <button type="button" id="delete-btn" class="button button--disabled" data-toggle="modal" data-tooltip="tooltip" data-placement="bottom" title="Delete a model" aria-label="Delete a model" style="margin-left:20px;">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>&nbsp;
+
+            <span id="operations">
+                
+             <button type="button" id="descri-btn" class="button button--disabled" data-page='overview' data-tooltip="tooltip" data-placement="bottom"  title="Description on this model" aria-label="Description on this model">
+            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>&nbsp;      
+                
+            <button type="button" id="metadata-btn" class="button button--disabled"  data-page='metadata' data-tooltip="tooltip" data-placement="bottom" title="Metadata of this model" aria-label="Metadata of this model">
+            <span class="glyphicon glyphicon-sort" aria-hidden="true"></span></button>&nbsp;
+            
+            <button type="button" id="API-btn"class="button button--disabled"  data-page='api' data-tooltip="tooltip" data-placement="bottom" title="Get API URL" aria-label="Get API URL">
+            <span class="glyphicon glyphicon-link" aria-hidden="true"></span></button>&nbsp;
+            
+            <button type="button" id="hist-btn" class="button button--disabled"  data-page='history' data-toggle="modal" data-tooltip="tooltip" data-placement="bottom" title="History of this model" aria-label="History of this model">
+            <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span></button>&nbsp;
+                        
+            <button type="button" class="button button--disabled"  data-page='overview' data-tooltip="tooltip" data-placement="bottom" title="Get code snippets" aria-label="Metadata of this model">
+            <span class="glyphicon glyphicon-console" aria-hidden="true"></span></button>&nbsp;
+            
+            <button type="button" id="test-btn" class="button button--disabled"  data-page='score' data-tooltip="tooltip" data-placement="bottom" title="Make a new score" aria-label="Make a new score">
+            <span class="glyphicon glyphicon-random" aria-hidden="true"></span></button>&nbsp;
+            
+            <button type="button" class="button button--disabled" id="refresh-btn"  data-page='refresh' data-tooltip="tooltip" data-placement="bottom" title="Refresh this model" aria-label="Refresh this model">
+            <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>&nbsp;
+                
+            <button type="button" class="button button--disabled" id="visualize-btn"  data-page='visualization' data-tooltip="tooltip" data-placement="bottom" title="Explain/Visualize this model" aria-label="Explain/Visualize this model">
+            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></button>&nbsp;
+                
+          </span>
+            <table class="table" id="catalog">
+            <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col">Name</th>
+                <th scope="col">Type</th>
+                <th scope="col">Source</th>
+                <th scope="col">Last Refreshed</th>
+                <th scope="col">Created</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+              </table></div>
+             
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../static/javascript/jquery.dynatable.js"></script>
+    <script src="../static/javascript/jquery.form.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+
+          <script type="text/javascript">
+          $(document).ready(function () {
+       
+       //tooltip initialization
+      $('[data-tooltip="tooltip"]').tooltip();
+
+      var access_key = $('#access-key').data('key');
+
+       //jump to corresponding page when user clicks an operation button of a model
+      $('#operations button').each(function () {
+          $(this).click( function () {
+           var page = $(this).data('page');
+           console.log(page)
+           window.location.replace("http://"+document.location.host+"/model?name="+modelsname+"&page="+page);
+          });
+      });
+
+       $('#add-new-model-btn').click(function () {
+          window.location.replace("http://"+document.location.host+"/new-model");
+       });
+
+       function row_writer(rowIndex, record, columns, cellWriter) {
+       var row;
+        row = '<tr class="clickable-row" data-model="'+record.model_name+'" data-type="'+record.model_type+'" data-source='+record.source+'><td><input class="model-checkbox checkbox--light" type="checkbox" id="'+record.model_name+'-checkbox" style="display:none"><label style="display:none" for="'+record.model_name+'-checkbox"></label></td><td><a href="/model?name='+record.model_name+'">'+record.model_name+'</a></td><td>'+record.model_type+'</td><td>'+record.source+'</td><td>'+record.last_refreshed+'</td><td>'+record.creation_time+'</td></tr>';
+       return row;
+    }
+    
+     var dynatable = $('#catalog').dynatable({
+        features: {
+              perPageSelect: false,
+              recordCount: false,
+              pushState: false,
+              search: false
+        },
+        table: {
+          defaultColumnIdStyle: 'camelCase'
+        },
+        dataset: {
+          perPageDefault: 8,
+        },
+        writers: {
+          _rowWriter: row_writer
+        }
+      }).data('dynatable');
+    
+    $.ajax({
+      type: "GET",
+      url: "http://"+document.location.host+"/records?access_key="+access_key,
+      success: function(data){
+          console.log(data);
+          dynatable.records.updateFromJson({records: data});
+          dynatable.records.init();
+          dynatable.process();
+      }
+   });
+
+  $('#catalog').on('click', '.clickable-row', function () {
+    $('.selected').removeClass('selected');
+    $(this).addClass('selected');
+    window.modelsname = $('.selected').data('model');
+    window.type = $('.selected').data('type');
+    window.source = $('.selected').data('source');
+    console.log(modelsname);
+    $(this).find('.model-checkbox').change();
+
+    });
+
+  $('#catalog').on('change', '.model-checkbox', function () {
+    checkbox = $(this);
+    if (checkbox.is(':checked')) {
+      checkbox.prop('checked', false);
+      console.log($('.model-checkbox:checked').size())
+    }
+    else {
+      checkbox.prop('checked', true);
+      console.log($('.model-checkbox:checked').size())
+    }
+    var checked = $('.model-checkbox:checked').size();
+    if ( checked == 1 ) {
+      $('#delete-btn').removeClass('button--disabled');
+      $('#operations .button').each(function () {
+          $(this).removeClass('button--disabled') 
+          })
+    }
+    else if ( checked >= 2) {
+      $('#delete-btn').removeClass('button--disabled');
+      $('#operations .button').each(function () {
+          $(this).addClass('button--disabled')
+          })
+    }
+    else {
+      $('#delete-btn').addClass('button--disabled');
+      $('#operations .button').each(function () {
+          $(this).addClass('button--disabled')
+          })
+    }
+  });
+
+
+
+
+    $('#catalog').on('mouseenter', '.clickable-row', 
+    function () {
+      $(this).find('.model-checkbox').show();
+      $(this).find('label').show();
+    }).on('mouseleave', '.clickable-row',
+    function () {
+      if (!$(this).find('.model-checkbox').is(':checked')) {
+         $(this).find('.model-checkbox').hide();
+         $(this).find('label').hide();
+      }
+    });
+
+  var try_delete = [];
+
+$('#delete-btn').click(function () {
+  $('#delete-number').html($('.model-checkbox:checked').size());
+  var modal = $('#delete-confirm-modal');
+        modal.modal('show');
+
+    });
+
+$('#confirm-delete').click(function () {
+
+    var modal = $('#delete-confirm-modal');
+        modal.modal('hide');
+
+    $('.model-checkbox:checked').each(function () {
+    var model_name = $(this).parent().parent().data('model')
+    try_delete.push(model_name);
+    $(this).parent().parent().remove();
+    });
+
+    for (var i=0; i<try_delete.length; i++) {
+      $.ajax({
+      type: "DELETE",
+      url: "http://"+document.location.host+"/api/"+try_delete[i]+"?access_key="+access_key,
+      error: function (jqXHR) {
+            var modal_1 = $('#error-modal');
+            $('#error-modal-message').html(jqXHR.responseText);
+            modal_1.modal('show')
+      }
+      })
+  }
+});
+
+$('#cancel-delete').click(function () {
+            var modal = $('#delete-confirm-modal');
+            modal.modal('hide')
+
+      });
+
+
+});
+   
+          </script>
+{% endblock%}
+

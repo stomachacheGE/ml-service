@@ -1,0 +1,14 @@
+
+          <h2 class="sub-header">Model - {{model.model_name}}</h2><br>
+          <h5> Here you can find some basic information of the model.</h5>
+          <hr>
+        <table id="model-info">
+            <tr><th>type</th><td>{{model.model_type}}</td></tr>
+            <tr><th>source</th><td>{{model.source}}</td></tr>
+            <tr><th>created</th><td>{{model.creation_time}}</td></tr>
+            <tr><th>last-refreshed</th><td>{{model.last_refreshed}}</td></tr>
+        </table><br>
+        <h3>Description</h3><br>
+        <textarea maxcount="300" placeholder="" id="description-text" class="text textarea--light textarea--autosize" rows="5">{{model.description}}</textarea><br>
+        <a class="button" id="save-description" style="width: 180px">Save Changes</a>
+    </div>

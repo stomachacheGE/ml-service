@@ -1,0 +1,47 @@
+          <h2 class="sub-header">Metadata - {{model_name}}</h2><br>
+          <h5> Here you can find input and output of the model.</h5>
+          <hr>
+          <h3>Input</h3>
+            <table id="input-metadata-table"  class="metadata-table">
+            <thead><tr><th>Name</th><th>Storage Type</th><th>Measurement Level</th></tr></thead>
+            <tbody>
+
+            {%for item in metadata%}
+            <tr>
+                <td>{{item['name']}}</td>
+                <td>{{item['storageType']}}</td>
+                <td>{{item['measurementLevel']}}</td>
+            </tr>
+            {%endfor%}
+            </tbody></table>
+          <hr>
+          <h3>Output</h3>
+          {%if type == 'SPSS Predictive Model'%}
+            {% if output_metadata is string %}
+            <br>
+            <p>Whoops! Output metadata is available only after making the first scoring.</p>
+            {% else %}
+            <table class="metadata-table">
+            <thead><tr><th>Output Name</th></tr></thead>
+            <tbod>
+              {%for item in output_metadata %}
+              <tr>
+              <td >{{item.name}}</td>
+            </tr>
+            {%endfor%}</tbody>
+            </table>
+            {% endif %}
+          {%else%}
+            <table id="output-metadata-table"  class="metadata-table">
+            <thead><tr><th>Name</th><th>Storage Type</th><th>Measurement Level</th></tr></thead>
+            <tbody>
+
+            {%for item in output_metadata%}
+            <tr>
+                <td>{{item['name']}}</td>
+                <td>{{item['storageType']}}</td>
+                <td>{{item['measurementLevel']}}</td>
+            </tr>
+            {%endfor%}
+            </tbody></table>
+            {%endif%}

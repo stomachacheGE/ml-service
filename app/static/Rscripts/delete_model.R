@@ -1,0 +1,6 @@
+library(ibmdbR)
+mycon <- idaConnect("BLUDB", "", "")
+idaInit(mycon)
+drop <- idaDropModel('<model_name>')
+cat("{'message':'OK'}")
+idaClose(mycon)

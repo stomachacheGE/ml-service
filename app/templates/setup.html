@@ -1,0 +1,256 @@
+<!-- extend base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<div id="access-key" data-key="{{user.access_key}}"></div>
+{% endif %}
+
+{% include 'error_modal.html' %}
+
+<div class="modal fade in" id="setup-processing" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <span class="h3 modal-title">
+          
+          Info
+          
+          </span>
+       </div> <!---/modal header-->
+      
+      <div class="modal-body"> 
+      
+      <h4>Setting up your catalog may take few minutes, please wait a moment...</h4>
+      <br>
+      <p id="error-message"></p>
+    
+      </div><!---/modal body-->
+
+      <div class = "modal-footer">
+        <a id="processing_btn" class="button button--disabled" href="/catalog" >Setting Up...</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-10 main">
+          <h2 class="sub-header"><h1> Welcome to IBM Machine Learning Service</h1> </h2>
+          <hr>
+<br>
+<h4> Before starting to use this service, please follow the following steps to set up your model catalog:</h4><br>
+
+<ul class="nav nav-tabs" id="setup-nav">
+  <li class="active"><a href="#choose-working-space" data-toggle="tab" aria-expanded="true">1. Choose Working Space</a></li>
+  <li><a href="#bind-services" data-toggle="tab" aria-expanded="false">2. Bind Services</a></li>
+  <li><a href="#deploy-sample-models" data-toggle="tab" aria-expanded="false">3. Deploy Sample Models</a></li>
+
+</ul>
+<div id="setup-tab-content" class="tab-content">
+  <div class="tab-pane fade active in" id="choose-working-space">
+    <br>
+  <p>Choose Bluemix working space where you want to locate Machine Learning Service:</p><br>
+  <form class="form-horizontal">
+  <div class="form-group">
+      <label for="region" class="col-md-2 control-label">Bluemix region:</label>
+      <div class="col-md-2">
+      <select class="form-control" id="region" style="width:300px"><option disabled selected></option><option>US</option><option>United Kingdom</option><option>Sydney</option></select></div>
+      </div>   
+     <div class="form-group">
+      <label for="org" class="col-md-2 control-label">Organization:</label>
+      <div class="col-md-2">
+      <select class="form-control" id="org" style="width:300px"><option disabled selected></option><option disabled>Loading...</option></select></div>
+      </div> 
+       <div class="form-group">
+      <label for="space" class="col-md-2 control-label">Space:</label>
+      <div class="col-md-2">
+      <select class="form-control" id="space" style="width:300px"><option disabled selected></option><option disabled>Loading...</option></select></div>
+      </div>
+      <hr>
+      <button class="btn btn-default" style="float:left">Cancel</button>
+      <button class="btn btn-primary" id="choose-working-space-next" style="float:right">Next</button>
+  </form> 
+  </div>
+  <div class="tab-pane fade" id="bind-services">
+    <p>In order to use Machine Learning Service, we have to create an app called "ML_SERVICE" in your Bluemix space. <br></p><p>Besides, a new DashDB and a new Predictive Analytics service instances are also created and bind to the app "ML_SERVICE". </p>
+    <br>
+    <p>If you want to use your own DashDB service instance, please choose from the following list.</p>
+      <h6>(Note: This service instance has to be in the same Bluemix space as you specified in the last step.)</h6><br>
+  <form class="form-horizontal">
+  <div class="form-group">
+      <label for="dashdb-instances" class="col-md-2 control-label">DashDB Instance:</label>
+      <div class="col-md-10">
+      <select class="form-control" id="dashdb_instances" style="width:300px"><option selected></option><option disabled>Loading...</option></select></div>
+      </div>    
+      <hr>
+      <button class="btn btn-default" id="bind-services-back" style="float:left">Back</button>
+      <button class="btn btn-primary" id="bind-services-next" style="float:right">Next</a></button>
+  </form> 
+      
+  </div>
+  <div class="tab-pane fade" id="deploy-sample-models">
+    <br>
+    <p>Besides possible models you already have in your DashDB service instance, it is also possible to add sample models to your catalog. Simply select what you want to add:</p>
+    <div id="samples">
+      <form class="form-horizontal">
+  <div class="form-group">
+      <p class="col-md-11 col-md-offset-1" style="position: relative; right:30px">DashDB Samples: <span class="h6"><a href="">LEARN MORE</a></span></p>
+      <div class="col-md-11 col-md-offset-1 checkbox">
+      <label><input type="checkbox" data-sample="churn">Customer Churn</label>
+      </div>   
+        <div class="col-md-11 col-md-offset-1 checkbox">
+      <label><input type="checkbox"  data-sample="acquisition">Customer Acquisition</label>
+      </div> </div>
+      <div class="form-group">
+          <p class="col-md-11 col-md-offset-1" style="position: relative; right:30px">Predictive Analytics Samples: <span class="h6"><a href="">LEARN MORE</a></span></p>
+      <div class="col-md-11 col-md-offset-1 checkbox">
+      <label><input type="checkbox"  data-sample="drug">Drug Prediction</label>
+      </div>   
+        <div class="col-md-11 col-md-offset-1 checkbox">
+      <label><input type="checkbox"  data-sample="customer">Customer Prediction</label>
+      </div> </div>
+    </form> 
+      </div>
+      <hr>
+      <button class="btn btn-default" id="deploy-sample-models-back" style="float:left">Back</button>
+      <button id="finish-setup" class="btn btn-primary" style="float:right; color:#fff">Finish</button>
+
+  </div>
+
+</div>
+</div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+     $(document).ready(function () {
+
+    //Button control logics
+
+    var access_key = $('#access-key').data('key');
+
+    $('#choose-working-space-next').click(function (e) {
+      e.preventDefault(); //do not let the page get refreshed
+      $('#setup-nav a[href="#bind-services"]').tab('show');
+    });
+    
+    $('#bind-services-back').click(function (e) {
+      e.preventDefault(); //do not let the page get refreshed
+      $('#setup-nav a[href="#choose-working-space"]').tab('show');
+    });
+    
+    $('#bind-services-next').click(function (e) {
+      e.preventDefault()
+      $('#setup-nav a[href="#deploy-sample-models"]').tab('show');
+    });
+    
+    $('#deploy-sample-models-back').click(function (e) {
+      e.preventDefault()
+      $('#setup-nav a[href="#bind-services"]').tab('show');
+    });
+
+    function select_autofill(input, request_api, target_select, get_val_or_text) {
+
+
+      if (get_val_or_text == 'text') {
+        var name = $(input + ' option:selected').text() }
+      else {
+        var name = $(input + ' option:selected').val() }
+
+      $(target_select + " option:not(:first-child)").remove();
+      $(target_select + " option:first").after('<option>Loading...</option>');
+      var url = "http://"+document.location.host+"/"+request_api+"="+name+"&access_key="+access_key
+
+      $.ajax({
+      type: "GET",
+      url: url,
+      success: function (data) {
+        $(target_select + " option:not(:first-child)").remove();
+        $(target_select + " option:first").after(data); },
+      error: function(jqXHR, status) {
+        var modal = $('#error-modal');
+        $('#error-modal .modal-body #error-modal-message').html(jqXHR.responseText);
+        modal.modal('show')
+      }
+    });
+
+    }
+    
+    $('#region').on('change', function () {
+      select_autofill('#region','orgs?region', '#org', 'text')
+      select_autofill('#region','instances?service=dashdb&region', '#dashdb_instances', 'text')
+    });
+
+    $('#org').on('change', function () {
+      var region = $('#region option:selected').text();
+      select_autofill('#org','spaces?region='+region+'&org', '#space', 'val')
+    });
+
+    $('#finish-setup').click(function () {
+
+      var samples = [];
+      var modal = $('#setup-processing');
+      modal.modal('show');
+
+     $('input[type="checkbox"]').each(function () {
+        console.log(this.checked);
+        if (this.checked) {
+          samples.push($(this).data('sample'))
+        }
+      }); 
+
+      var post_data = {
+        "region" : $('#region option:selected').text(),
+        "org_name": $('#org option:selected').text(),
+        "org_guid": $('#org option:selected').val(),
+        "space_name": $('#space option:selected').text(),
+        "space_guid": $('#space option:selected').val(),
+        "dashdb_name": $('#dashdb_instances option:selected').text(),
+        "dashdb_guid": $('#dashdb_instances option:selected').val(),
+        "samples": samples 
+      };
+
+      console.log(post_data);
+
+      $.ajax({
+          type: "POST",
+          contentType:"application/json; charset=utf-8",
+          url:"http://"+document.location.host+"/setup?access_key="+access_key,
+          data: JSON.stringify(post_data),
+          success: function (data) {
+             $('#setup-processing .modal-body h4').html('Catalog created successfully. Click the following button to your catalog.');
+             $('#processing_btn').html('To Catalog');
+             $('#processing_btn').removeClass('button--disabled');
+             $('#error-message').html("");
+            $("#setup-processing .modal-footer a").click(function (e) {
+                window.location.href = "/catalog";
+             })
+          },
+          error: function (jqXHR, status) {
+             $('#setup-processing .modal-body h4').html('Sorry! There is some problems: ');
+             $('#processing_btn').html('Ok');
+             $('#processing_btn').removeClass('button--disabled');
+             $('#error-message').html(jqXHR.responseText);
+             $("#setup-processing .modal-footer a").click(function (e) {
+                  modal.modal('hide');
+                e.preventDefault();
+
+             })
+          },  
+        });
+    });
+
+    $("#setup-processing").on('hidden.bs.modal',function () {
+    $('#setup-processing .modal-body h4').html('Setting up your catalog may take few minutes, please wait a moment...');
+    $('#processing_btn').html('Setting Up...');
+    $('#processing_btn').addClass('button--disabled');
+    $('#error-message').html("");
+    });
+
+    })
+
+    </script>
+{% endblock %}

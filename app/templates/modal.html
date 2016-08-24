@@ -1,0 +1,25 @@
+
+<div class="modal fade in" id="{{id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <span class="h3 modal-title">
+          
+          Hints
+          
+          </span>
+       </div> <!---/modal header-->
+      
+      <div class="modal-body"> 
+      
+        {% if id=='real-time-score-hint'%}
+        <textarea maxcount="300" placeholder="" id="hint-text" class="text textarea--light textarea--autosize" rows="5">{{hint}}</textarea><br>
+        <a id="save-hint" class="button" style="width:180px" >Save Changes</a>
+        {% endif %}
+          
+    
+      </div><!---/modal body-->
+    </div>
+  </div>
+</div>

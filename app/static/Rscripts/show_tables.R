@@ -1,0 +1,6 @@
+con <- idaConnect("BLUDB","","")
+idaInit(con)
+df <- idaShowTables()
+tables <- paste("'",df$Name,"'",sep='',collapse=",")
+cat(paste("{'tables':[",tables,"]}",sep=''))
+idaClose(con)

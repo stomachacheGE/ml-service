@@ -1,0 +1,29 @@
+
+<div class="modal fade in" id="{{id}}" tabindex="-1" role="dialog">
+  {% if large %}
+  <div class="modal-dialog modal-lg" role="document">
+  {% else %}
+  <div class="modal-dialog" role="document">
+  {% endif %}
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <span class="h3 modal-title">
+          
+          Alert
+          
+          </span>
+       </div> <!---/modal header-->
+      
+      <div class="modal-body"> 
+      
+      <p>{{info}}</p>
+    
+      </div><!---/modal body-->
+
+      <div class = "modal-footer">
+        <a class="button" href="{{jump_to}}">OK</a>
+      </div>
+    </div>
+  </div>
+</div>
