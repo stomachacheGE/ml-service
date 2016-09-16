@@ -1,1 +1,2 @@
-*.rb linguist-language=Python
+app/static/* linguist-vendored
+app/static/javascript/new_model.js linguist-vendored=false
